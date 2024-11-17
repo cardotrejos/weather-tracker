@@ -1,0 +1,21 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=cG<#yxQ(qsy]dMg6R9jk
+      - POSTGRES_DB=weather_tracker
+      - TIMESCALEDB_TELEMETRY=off
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres && psql -U postgres -d weather_tracker -c \"SELECT 1 FROM pg_extension WHERE extname = 'timescaledb';\""]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
+
+volumes:
+  timescale_data:
