@@ -32,10 +32,11 @@ defmodule WeatherTracker.WeatherConditions.WeatherCondition do
 
   def create_changeset(weather_condition = %__MODULE__{}, attrs) do
     timestamp = DateTime.utc_now() |> DateTime.truncate(:second)
+    required_fields = @allowed_fields -- [:timestamp, :tvoc_ppb]
 
     weather_condition
     |> cast(attrs, @allowed_fields)
     |> put_change(:timestamp, timestamp)
-    |> validate_required(@allowed_fields -- [:timestamp])
+    |> validate_required(required_fields)
   end
 end
