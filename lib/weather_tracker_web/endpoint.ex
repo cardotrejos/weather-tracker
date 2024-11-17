@@ -1,6 +1,5 @@
 defmodule WeatherTrackerWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :weather_tracker
-  import Phoenix.Controller, only: [put_secure_browser_headers: 2]
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -50,8 +49,5 @@ defmodule WeatherTrackerWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug :put_secure_browser_headers, %{
-    "content-security-policy" => "default-src 'self'; frame-src 'self' https://monitoreo.cardotrejos.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://monitoreo.cardotrejos.com; style-src 'self' 'unsafe-inline' https://monitoreo.cardotrejos.com; img-src 'self' data: https://monitoreo.cardotrejos.com"
-  }
   plug WeatherTrackerWeb.Router
 end
